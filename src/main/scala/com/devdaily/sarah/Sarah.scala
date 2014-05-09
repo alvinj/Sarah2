@@ -342,14 +342,15 @@ class Sarah {
     }
 
   }
-  
+
+  // TODO/NOTE Actor no longer has a `start` method
   def startOlderPlugins {
-    log.info("starting old plugins ...")
-    for (plugin <- pluginInstances) {
-      log.info("Trying to start plugin instance: " + plugin.toString())
-      connectInstanceToBrain(plugin)
-      startPlugin(plugin)
-    }
+      log.info("starting old plugins ...")
+      for (plugin <- pluginInstances) {
+          log.info("Trying to start plugin instance: " + plugin.toString())
+          connectInstanceToBrain(plugin)
+          //startPlugin(plugin)
+      }
   }
   
 //  def startAkkaPlugins {

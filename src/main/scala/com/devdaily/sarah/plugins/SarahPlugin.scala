@@ -10,7 +10,7 @@ trait SarahPlugin {
   var brain: ActorRef = null
 
   def connectToBrain(brain: ActorRef) {
-    this.brain = brain
+      this.brain = brain
   }
   
   def startPlugin 

@@ -31,6 +31,7 @@ sleep 1
 # RUN
 # ---
 
+echo "About to open 'release/Sarah.app' ..."
 open release/Sarah.app
 
 

@@ -4,7 +4,7 @@
   <property environment="env"/>
 
   <!-- input stuff -->
-  <property name="classes.dir" value="../target/scala-2.9.1/classes" />
+  <property name="classes.dir" value="../target/scala-2.10/classes" />
   <property name="lib.dir" value="../lib" />
   <property name="current.dir" value="." />
   <property name="scala-lib.dir" value="scala-libs" />
