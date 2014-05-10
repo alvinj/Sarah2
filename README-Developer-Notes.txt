@@ -90,7 +90,7 @@ For JavaMail:
 
 For Lift-JSON:
 
-   * lift-json*
+   * lift-json (from http://mvnrepository.com/artifact/net.liftweb/lift-json_2.10/2.5.1)
    * paranamer
 
 

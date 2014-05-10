@@ -72,14 +72,15 @@ public class ComputerVoice
     System.out.println("(ComputerVoice) ENTERED SPEAK(" + sentence + ") AT " + System.currentTimeMillis());    
     String thingToSay = "say \"" + sentence + "\"";
     ScriptEngineManager mgr = new ScriptEngineManager();
-//    ScriptEngine engine = mgr.getEngineByName("AppleScript");
-    ScriptEngine engine = mgr.getEngineByName( "AppleScriptEngine" );
+    ScriptEngine engine = mgr.getEngineByName("AppleScriptEngine");
     try
     {
         engine.eval(thingToSay);
     }
     catch (ScriptException e)
     {
+        System.err.println("AppleScriptEngine was null, stack trace follows");
+        e.printStackTrace();
       // TODO deal with this properly
     }
   }

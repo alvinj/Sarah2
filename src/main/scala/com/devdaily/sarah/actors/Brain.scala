@@ -2,25 +2,22 @@ package com.devdaily.sarah.actors
 
 import scala.util.Random
 import scala.collection.mutable.ListBuffer
-import edu.cmu.sphinx.frontend.util.Microphone
 import collection.JavaConversions._
 import java.util._
 import java.io.IOException
 import java.io.File
 import javax.script.ScriptEngineManager
 import javax.script.ScriptException
-import edu.cmu.sphinx.recognizer.Recognizer
 import javax.sound.sampled._
-import _root_.com.weiglewilczek.slf4s.Logging
-import _root_.com.weiglewilczek.slf4s.Logger
 import _root_.com.devdaily.sarah._
 import _root_.com.devdaily.sarah.plugins._
 import scala.io.Source
 import scala.collection.mutable.ArrayBuffer
 import javax.swing.SwingUtilities
 import akka.actor._
-import akka.dispatch.{ Await, Future }
-import akka.util.duration._
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
+import grizzled.slf4j.Logging
 
 object Brain {
 
@@ -64,7 +61,7 @@ extends Actor
 with Logging
 {
   
-  val log = Logger("Brain")
+//  val log = Logger("Brain")
 
   // actors we collaborate with
   var mouth: ActorRef = _
@@ -94,16 +91,16 @@ with Logging
     // actions
 
     case message: MessageFromEars =>
-         log.info(format("%d - got MessageFromEars", getCurrentTime))
-         log.info(format("    message was: " + message.textFromUser))
+         logger.info(format("%d - got MessageFromEars", getCurrentTime))
+         logger.info(format("    message was: " + message.textFromUser))
          handleMessageFromEars(message)
 
     case pleaseSay: PleaseSay =>
-         log.info(format("%d - got PleaseSay request", getCurrentTime))
+         logger.info(format("%d - got PleaseSay request", getCurrentTime))
          handlePleaseSayRequest(pleaseSay)
 
     case playSoundFileRequest: PlaySoundFileRequest =>
-         log.info(format("%d - got PlaySoundFileRequest", getCurrentTime))
+         logger.info(format("%d - got PlaySoundFileRequest", getCurrentTime))
          handlePlaySoundFileRequest(playSoundFileRequest)
          
     case HeresANewPlugin(pluginRef) =>
@@ -132,11 +129,11 @@ with Logging
     // other
     
     case Die =>
-         log.info("*** GOT DIE MESSAGE, EXITING ***")
+         logger.info("*** GOT DIE MESSAGE, EXITING ***")
          context.stop(self)
 
     case unknown => 
-         log.info(format("got an unknown request(%s), ignoring it", unknown.toString))
+         logger.info(format("got an unknown request(%s), ignoring it", unknown.toString))
   }
   
   def handleNewPluginRef(pluginRef: ActorRef) {
@@ -189,6 +186,9 @@ with Logging
     mouthState = mouth
     updateSarahsUI
   }
+
+  // needed for Future use
+  import scala.concurrent.ExecutionContext.Implicits.global
   
   def tellUISpeakingHasEnded {
     val f1 = Future {  
@@ -229,7 +229,7 @@ with Logging
    */
   def sarahJustFinishedSpeaking: Boolean = {
     val timeSinceSarahLastSpoke = getCurrentTime - lastTimeSarahSpoke
-    log.info(format("timeSinceSarahLastSpoke = %d", timeSinceSarahLastSpoke))
+    logger.info(format("timeSinceSarahLastSpoke = %d", timeSinceSarahLastSpoke))
     if (timeSinceSarahLastSpoke < minimumWaitTime) true else false
   }
 
@@ -241,19 +241,19 @@ with Logging
 
   def markThisAsTheLastTimeSarahSpoke {
     lastTimeSarahSpoke = getCurrentTime
-    log.info(format("lastTimeSarahSpoke = %d", getCurrentTime))
+    logger.info(format("lastTimeSarahSpoke = %d", getCurrentTime))
   }
   
   def handleMessageFromEars(message: MessageFromEars) {
-    log.info("entered handleMessageFromEars")
+    logger.info("entered handleMessageFromEars")
     if (mouthIsSpeaking) {
-        log.info(format("sarah is speaking, ignoring message from ears (%s)", message.textFromUser))
+        logger.info(format("sarah is speaking, ignoring message from ears (%s)", message.textFromUser))
     }
     else if (sarahJustFinishedSpeaking) {
-        log.info(format("sarah just spoke, ignoring message from ears (%s)", message.textFromUser))
+        logger.info(format("sarah just spoke, ignoring message from ears (%s)", message.textFromUser))
     } 
     else {
-        log.info(format("passing MessageFromEars to brainSomethingWasHeardHelper (%s)", message.textFromUser))
+        logger.info(format("passing MessageFromEars to brainSomethingWasHeardHelper (%s)", message.textFromUser))
         brainSomethingWasHeardHelper ! SomethingWasHeard(message.textFromUser, inSleepMode, awarenessState)
     }
   }
@@ -261,20 +261,20 @@ with Logging
   // all we do now is pass this on to another actor
   private def handlePleaseSayRequest(pleaseSay: PleaseSay) {
     if (inSleepMode) {
-      log.info(format("in sleep mode, NOT passing on PleaseSay request (%s)", pleaseSay.textToSay))
+      logger.info(format("in sleep mode, NOT passing on PleaseSay request (%s)", pleaseSay.textToSay))
     }
     else {
-      log.info(format("passing PleaseSay request to brainSomethingWasHeardHelper (%s)", pleaseSay.textToSay))
+      logger.info(format("passing PleaseSay request to brainSomethingWasHeardHelper (%s)", pleaseSay.textToSay))
       brainSomethingWasHeardHelper ! pleaseSay
     }
   }
 
   private def handlePlaySoundFileRequest(playSoundFileRequest: PlaySoundFileRequest) {
     if (inSleepMode) {
-      log.info(format("in sleep mode, NOT passing on PlaySoundFile request (%s)", playSoundFileRequest.soundFile))
+      logger.info(format("in sleep mode, NOT passing on PlaySoundFile request (%s)", playSoundFileRequest.soundFile))
     }
     else {
-      log.info(format("passing SoundFileRequest to Mouth (%s)", playSoundFileRequest.soundFile))
+      logger.info(format("passing SoundFileRequest to Mouth (%s)", playSoundFileRequest.soundFile))
       brainSomethingWasHeardHelper ! playSoundFileRequest
     }
   }

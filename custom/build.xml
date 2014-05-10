@@ -7,7 +7,6 @@
   <property name="classes.dir" value="../target/scala-2.10/classes" />
   <property name="lib.dir" value="../lib" />
   <property name="current.dir" value="." />
-  <property name="scala-lib.dir" value="scala-libs" />
 
   <!-- output stuff -->
   <property name="jar.dir" value="jar" />
@@ -49,14 +48,8 @@
         <include name="**/*.jar"/>
       </fileset>
     </copy>
-
-    <!-- copy the scala jars to the 'jar' dir -->
-    <copy todir="${jar.dir}">
-      <fileset dir="${scala-lib.dir}">
-        <include name="**/*.jar"/>
-      </fileset>
-    </copy>
   </target>
+
 
   <!-- CREATE MAC BUNDLE (NEW) -->
 
@@ -75,8 +68,6 @@
 
         <!-- need an entry for each jar file (!) -->
         <classpath file="jar/JNativeHook.jar" />
-        <classpath file="jar/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar" />
-        <classpath file="jar/akka-actor-2.0.2.jar" />
         <classpath file="jar/basicplayer3.0.jar" />
         <classpath file="jar/commons-codec-1.4.jar" />
         <classpath file="jar/commons-lang3-3.1.jar" />
@@ -93,20 +84,22 @@
         <classpath file="jar/jsapi.jar" />
         <classpath file="jar/junit-4.8.1.jar" />
         <classpath file="jar/kj_dsp1.1.jar" />
-        <classpath file="jar/lift-json_2.9.0-1-2.4-M2.jar" />
+        <classpath file="jar/lift-json_2.10-2.5.1.jar" />
         <classpath file="jar/mailapi.jar" />
         <classpath file="jar/mp3spi1.9.4.jar" />
-        <classpath file="jar/paranamer-2.1.jar" />
+        <!-- classpath file="jar/paranamer-2.4.1.jar" -->
         <classpath file="jar/pop3.jar" />
         <classpath file="jar/sarah.jar" />
-        <classpath file="jar/scala-library.jar" />
-        <classpath file="jar/slf4j-api-1.6.4.jar" />
-        <classpath file="jar/slf4j-simple-1.6.4.jar" />
-        <classpath file="jar/slf4s_2.9.1-1.0.7.jar" />
+        <!-- classpath file="jar/scala-library.jar" -->
+        <classpath file="jar/scalacheck_2.10-1.11.0.jar" />
+        <classpath file="jar/specs2_2.10-1.12.3.jar" />
         <classpath file="jar/smtp.jar" />
         <classpath file="jar/snakeyaml-1.9.jar" />
-        <classpath file="jar/sphinx4.jar" />
         <classpath file="jar/tritonus_share.jar" />
+
+        <!-- TODO i want to get rid of these -->
+        <classpath file="jar/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar" />
+        <classpath file="jar/sphinx4.jar" />
 
         <!-- option value="-Xdock:icon=../Resources/sarah.icns"></option -->
         <option value="-Xdock:icon=Contents/Resources/sarah.icns"/>

@@ -1,12 +1,11 @@
 package com.devdaily.sarah.actors
 
 import akka.actor._
-import com.weiglewilczek.slf4s.Logging
-import com.weiglewilczek.slf4s.Logger
 import com.devdaily.sarah.Sarah
 import com.devdaily.sarah.ComputerVoice
 import com.devdaily.sarah.plugins.PluginUtils
 import com.devdaily.sarah.plugins.PlaySoundFileRequest
+import grizzled.slf4j.Logging
 
 case class InitMouthMessage
 
@@ -17,7 +16,6 @@ case class InitMouthMessage
  */
 class Mouth(sarah: Sarah) extends akka.actor.Actor with Logging {
   
-  val log = Logger("Mouth")
   val brain:ActorRef = context.actorFor("../Brain")
   var mouthHelper:ActorRef = _
 
@@ -41,7 +39,7 @@ class Mouth(sarah: Sarah) extends akka.actor.Actor with Logging {
          brain ! MouthIsFinishedSpeaking
 
     case unknown => 
-         log.info(format("got an unknown request(%s), ignoring it", unknown.toString))
+         logger.info(format("got an unknown request(%s), ignoring it", unknown.toString))
   }
 
   def startMouthHelper {

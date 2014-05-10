@@ -2,11 +2,9 @@ package com.devdaily.sarah.actors
 
 import akka.actor._
 import akka.pattern.ask
-import akka.dispatch.Await
 import akka.util.Timeout
-import akka.util.duration._
-import com.weiglewilczek.slf4s.Logging
-import com.weiglewilczek.slf4s.Logger
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
 import com.devdaily.sarah.plugins.PleaseSay
 import collection.JavaConversions._
 import java.util.ArrayList
@@ -19,18 +17,17 @@ import com.devdaily.sarah.SarahJavaHelper
 import java.io.IOException
 import scala.collection.mutable.ArrayBuffer
 import javax.script.ScriptException
-import edu.cmu.sphinx.frontend.util.Microphone
 import com.devdaily.sarah.Sarah
 import java.io.File
 import com.devdaily.sarah.plugins.PlaySoundFileRequest
 import com.devdaily.sarah.actors._
+import grizzled.slf4j.Logging
 
 class BrainSomethingWasHeardHelper(sarah: Sarah)
 extends Actor
 with Logging
 {
 
-  val log = Logger("BrainSomethingWasHeardHelper")
   val brain:ActorRef = context.parent
   var mouth:ActorRef = _
 
@@ -48,18 +45,18 @@ with Logging
          handleSomethingWeHeard(t, s, a)
 
     case pleaseSay: PleaseSay =>
-         log.info(format("got a please-say request (%s) at (%d)", pleaseSay.textToSay, System.currentTimeMillis))
+         logger.info(format("got a please-say request (%s) at (%d)", pleaseSay.textToSay, System.currentTimeMillis))
          handlePleaseSayRequest(pleaseSay)
       
     case playSoundFileRequest: PlaySoundFileRequest =>
          handleSoundFileRequest(playSoundFileRequest)
       
     case unknown => 
-         log.info(format("got an unknown request(%s), ignoring it", unknown.toString))
+         logger.info(format("got an unknown request(%s), ignoring it", unknown.toString))
   }
   
   private def handlePleaseSayRequest(pleaseSay: PleaseSay) {
-    log.info(format("sending msg (%s) to mouth at (%d)", pleaseSay.textToSay, System.currentTimeMillis))
+    logger.info(format("sending msg (%s) to mouth at (%d)", pleaseSay.textToSay, System.currentTimeMillis))
     getMouth ! SpeakMessageFromBrain(pleaseSay.textToSay)
   }  
   
@@ -79,14 +76,14 @@ with Logging
     if (whatWeHeard==null || whatWeHeard.trim().equals("")) return
     if (inSleepMode)
     {
-      log.info("in sleep mode, checking to see if this is a WakeUp request")
+      logger.info("in sleep mode, checking to see if this is a WakeUp request")
       // if we're sleeping, the only request we respond to is "wake up"
       brain ! SetEarsState(Brain.EARS_STATE_HEARD_SOMETHING)
       handleWakeUpRequestIfReceived(whatWeHeard, awarenessState)
     }
     else
     {
-      log.info("calling handleVoiceCommand")
+      logger.info("calling handleVoiceCommand")
       brain ! SetEarsState(Brain.EARS_STATE_NOT_LISTENING)
       handleVoiceCommand(whatWeHeard)
       brain ! SetEarsState(Brain.EARS_STATE_LISTENING)
@@ -114,7 +111,7 @@ with Logging
 
   // handle the text the computer thinks the user said
   private def handleVoiceCommand(whatTheComputerThinksISaid: String) {
-    log.info("entered handleVoiceCommand, text is: " + whatTheComputerThinksISaid)
+    logger.info("entered handleVoiceCommand, text is: " + whatTheComputerThinksISaid)
 
     val textTheUserSaid = whatTheComputerThinksISaid.toLowerCase
 
@@ -122,20 +119,20 @@ with Logging
     loadAllUserConfigurationFilesOrDie
 
     if (handleSpecialVoiceCommands(textTheUserSaid)) {
-      log.info("Handled a special voice command, returning.")
+      logger.info("Handled a special voice command, returning.")
       return
     }
 
     // if the command phrase is in the map, do some work
     if (phraseToCommandMap.containsKey(textTheUserSaid)) {
-      log.info("phraseToCommandMap contained key, trying to process")
+      logger.info("phraseToCommandMap contained key, trying to process")
       // handle whatever the user said
-      log.info("handleVoiceCommand, found your phrase in the map: " + textTheUserSaid)
+      logger.info("handleVoiceCommand, found your phrase in the map: " + textTheUserSaid)
       val handled = handleUserDefinedVoiceCommand(textTheUserSaid)
     }
     else {
       // there were no matches; check the plugins registered with sarah
-      log.info(format("phraseToCommandMap didn't have key (%s), trying plugins", textTheUserSaid))
+      logger.info(format("phraseToCommandMap didn't have key (%s), trying plugins", textTheUserSaid))
       val handled = sarah.tryToHandleTextWithPlugins(textTheUserSaid)
       if (handled) {
         brain ! SetBrainStates(getAwarenessState, Brain.EARS_STATE_LISTENING, Brain.MOUTH_STATE_NOT_SPEAKING)
@@ -174,10 +171,10 @@ with Logging
    * "shut down". Returns true if the voice command was handled.
    */
   private def handleSpecialVoiceCommands(textTheUserSaid: String):Boolean = {
-    log.info("entered handleSpecialVoiceCommands")
+    logger.info("entered handleSpecialVoiceCommands")
 
     if (textTheUserSaid.trim().equals("")) { 
-      log.info("(Brain) Got a blank string from Ears, ignoring it.")
+      logger.info("(Brain) Got a blank string from Ears, ignoring it.")
       return true
     }
 
@@ -244,7 +241,7 @@ with Logging
    * -------------------------------------------------
    */
   private def speak(textToSpeak: String) {
-    log.info("entered speak, text is: " + textToSpeak)
+    logger.info("entered speak, text is: " + textToSpeak)
     println(format("sending message (%s) to mouth at (%d)", textToSpeak, System.currentTimeMillis))
     getMouth ! SpeakMessageFromBrain(textToSpeak)
   }
@@ -269,28 +266,28 @@ with Logging
    */
   private def runAppleScriptCommand(command: String) {
     // TODO handle the sarah awareness states properly
-    log.info("entered runAppleScriptCommand")
+    logger.info("entered runAppleScriptCommand")
     // sarah is probably going to speak here
     val prevAwarenessState = getAwarenessState
     brain ! SetBrainStates(prevAwarenessState, Brain.EARS_STATE_NOT_LISTENING, Brain.MOUTH_STATE_SPEAKING)
     try {
-      log.info("calling appleScriptEngine.eval(command)")
-      log.info(format("  timestamp = %d", getCurrentTime))
+      logger.info("calling appleScriptEngine.eval(command)")
+      logger.info(format("  timestamp = %d", getCurrentTime))
       val appleScriptEngine = getAppleScriptEngine
       appleScriptEngine.eval(command)
     } catch {
-      case e: ScriptException => log.error(e.getMessage)
+      case e: ScriptException => logger.error(e.getMessage)
     } finally {
       // TODO is it correct to set this back to the previous state, or
       //      should i set it to 'listening'?
       brain ! SetBrainStates(prevAwarenessState, Brain.EARS_STATE_LISTENING, Brain.MOUTH_STATE_NOT_SPEAKING)
       brain ! MouthIsFinishedSpeaking
-      log.info("finished appleScriptEngine.eval(command)")
-      log.info(format("  timestamp = %d", getCurrentTime))
+      logger.info("finished appleScriptEngine.eval(command)")
+      logger.info(format("  timestamp = %d", getCurrentTime))
       // TODO should be able to get rid of this at some point
       PluginUtils.sleep(Brain.SHORT_DELAY)
-      log.info("LEAVING appleScriptEngine.eval(command)")
-      log.info(format("  timestamp = %d", getCurrentTime))
+      logger.info("LEAVING appleScriptEngine.eval(command)")
+      logger.info(format("  timestamp = %d", getCurrentTime))
     }
   }
   
@@ -300,8 +297,8 @@ with Logging
    * because of multithreading concerns.
    */
   private def runUserDefinedCommand(vc: VoiceCommand) {
-    log.info("(Brain) vc.command:     " + vc.getCommand())
-    log.info("(Brain) vc.applescript: " + vc.getAppleScript())
+    logger.info("(Brain) vc.command:     " + vc.getCommand())
+    logger.info("(Brain) vc.applescript: " + vc.getAppleScript())
     var appleScriptCommand = vc.getAppleScript()
     // split up multiline commands:
     // tell app iTunes to play next track | say "Next track"
@@ -321,14 +318,14 @@ with Logging
   }
   
   private def loadAllUserConfigurationFilesOrDie() {
-    log.info("entered loadAllUserConfigurationFilesOrDie")
+    logger.info("entered loadAllUserConfigurationFilesOrDie")
     if (allVoiceCommands != null) allVoiceCommands.clear()
     if (phraseToCommandMap != null) phraseToCommandMap.clear()
 
     // (appleScriptKey, appleScriptToExecute)
     commandFiles = SarahJavaHelper.getAllFilenames(sarah.getDataFileDirectory, "commands")
     if (commandFiles.length == 0) {
-      log.error("Could not find any command files, aborting.")
+      logger.error("Could not find any command files, aborting.")
       System.exit(1)
     }
     
@@ -336,7 +333,7 @@ with Logging
     // load the map of sentences to commands (sentence, appleScriptKey)
     phraseCommandMapFiles = SarahJavaHelper.getAllFilenames(sarah.getDataFileDirectory, "c2p")
     if (phraseCommandMapFiles.length == 0) {
-      log.error("Could not find any phrase command map files, aborting.")
+      logger.error("Could not find any phrase command map files, aborting.")
       System.exit(1)
     }
 
@@ -345,7 +342,7 @@ with Logging
 
   
   private def loadAllVoiceCommands() {
-    log.info("entered loadAllVoiceCommands")
+    logger.info("entered loadAllVoiceCommands")
     for (cmdFile <- commandFiles) {
       var canonFilename = sarah.getDataFileDirectory + File.separator + cmdFile
       try
@@ -355,7 +352,7 @@ with Logging
       }
       catch
       {
-        case e:IOException => log.info("Error trying to load voice commands.")
+        case e:IOException => logger.info("Error trying to load voice commands.")
                               e.printStackTrace()
       }
     }
@@ -381,19 +378,19 @@ with Logging
   }
   
   private def handleUserDefinedVoiceCommand(textTheUserSaid: String): Boolean = {
-    log.info("entered handleUserDefinedVoiceCommand")
+    logger.info("entered handleUserDefinedVoiceCommand")
     val commandFileKey = phraseToCommandMap.get(textTheUserSaid)  // ex: COMPUTER, JUST_CHECKING
-    log.info("Brain::handleUserDefinedVoiceCommand, commandFileKey = " + commandFileKey)
+    logger.info("Brain::handleUserDefinedVoiceCommand, commandFileKey = " + commandFileKey)
     // foreach is enabled by importing JavaConversions._ above
     allVoiceCommands.foreach{ voiceCommand =>
       val voiceCommandKey = voiceCommand.getCommand()
       if (voiceCommandKey.equalsIgnoreCase(commandFileKey)) {
         if (voiceCommand.getAppleScript==null || voiceCommand.getAppleScript.trim.equals("")) {
-          log.info("handleUserDefinedVoiceCommand, appleScript is not defined, passing on it")
+          logger.info("handleUserDefinedVoiceCommand, appleScript is not defined, passing on it")
           return false
         }
         if (!inSleepMode || voiceCommand.worksInSleepMode()) {
-          log.info("running runUserDefinedCommand(voiceCommand)")
+          logger.info("running runUserDefinedCommand(voiceCommand)")
           runUserDefinedCommand(voiceCommand)
           printMode
           return true
@@ -401,7 +398,7 @@ with Logging
         else
         {
           printMode
-          log.info("In sleep mode, ignoring command.")
+          logger.info("In sleep mode, ignoring command.")
           return false
         }
       }
@@ -410,13 +407,13 @@ with Logging
   }
   
   private def replyToUserSayingThankYou {
-    log.info("entered replyToUserSayingThankYou")
+    logger.info("entered replyToUserSayingThankYou")
     val textToSay = PluginUtils.getRandomStringFromFile(sarah.getDataFileDirectory + "/" + Brain.REPLY_TO_THANK_YOU_FILE)
     speak(textToSay)
   }
   
   private def replyToUserSayingComputer {
-    log.info("entered replyToUserSayingComputer")
+    logger.info("entered replyToUserSayingComputer")
     val textToSay = PluginUtils.getRandomStringFromFile(sarah.getDataFileDirectory + "/" + Brain.SAY_YES_FILE)
     speak(textToSay)
   }  

@@ -1,16 +1,14 @@
 package com.devdaily.sarah.actors
 
 import akka.actor._
-import edu.cmu.sphinx.frontend.util.Microphone
-import edu.cmu.sphinx.recognizer.Recognizer
 import java.util.Date
 import akka.event.Logging
-import com.weiglewilczek.slf4s._
 import com.devdaily.sarah.Sarah
 import com.devdaily.sarah.plugins.PlaySoundFileRequest
 import com.devdaily.sarah.ComputerVoice
 import com.devdaily.sarah.plugins.PluginUtils
 import com.devdaily.sarah.SoundFilePlayer
+import grizzled.slf4j.Logging
 
 case class MouthIsSpeaking
 case class MouthIsFinishedSpeaking
@@ -24,7 +22,6 @@ extends Actor
 with Logging
 {
   
-  val log = Logger("MouthHelper")
   val mouth:ActorRef = context.parent
   
   def receive = {
@@ -36,7 +33,7 @@ with Logging
          playSoundFile(playSoundFileRequest)
 
     case unknown => 
-         log.info(format("got an unknown request(%s), ignoring it", unknown.toString))
+         logger.info(format("got an unknown request(%s), ignoring it", unknown.toString))
 
   }
 
@@ -68,7 +65,7 @@ with Logging
       val p = new SoundFilePlayer(soundFile)
       p.play
     } catch {
-      case e:Exception => log.error(e.getMessage)
+      case e:Exception => logger.error(e.getMessage)
     }
     // TODO need to close the file, but to do so i need a way of knowing
     // when the file is finished playing; this method doesn't seem to block,

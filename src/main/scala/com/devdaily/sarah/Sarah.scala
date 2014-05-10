@@ -4,14 +4,6 @@ import java.io._
 import java.util.Properties
 import _root_.com.devdaily.sarah.agents._
 import _root_.com.devdaily.sarah.plugins._
-import edu.cmu.sphinx.frontend.util.Microphone
-import edu.cmu.sphinx.jsgf.JSGFGrammar
-import edu.cmu.sphinx.linguist.dictionary.Word
-import edu.cmu.sphinx.linguist.language.grammar.GrammarArc
-import edu.cmu.sphinx.linguist.language.grammar.GrammarNode
-import edu.cmu.sphinx.recognizer.Recognizer
-import edu.cmu.sphinx.result.Result
-import edu.cmu.sphinx.util.props.ConfigurationManager
 import akka.actor._
 import actors._
 import scala.xml._
@@ -28,8 +20,6 @@ import scala.collection.mutable.ArrayBuffer
 import java.awt.BorderLayout
 import java.util.logging.FileHandler
 import java.util.logging.Logger
-import _root_.com.weiglewilczek.slf4s.Logging
-import _root_.com.weiglewilczek.slf4s.Logger
 import _root_.com.devdaily.sarah.gui.Sarah2MainFrameController
 import javax.swing.JEditorPane
 import java.awt.Dimension
@@ -37,15 +27,16 @@ import java.awt.Insets
 import javax.swing.JScrollPane
 import javax.swing.JOptionPane
 import akka.pattern.ask
-import akka.dispatch.Await
 import akka.util.Timeout
-import akka.util.duration._
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
 import org.jnativehook.keyboard.NativeKeyListener
 import org.jnativehook.GlobalScreen
 import org.jnativehook.NativeHookException
 import org.jnativehook.keyboard.NativeKeyEvent
 import java.awt.Frame
 import Constants._
+import grizzled.slf4j.Logging
 
 /**
  * I'm going through some extra work in this file for two reasons.
@@ -57,6 +48,9 @@ import Constants._
 // (1) native keys
 //object Sarah extends Logging with NativeKeyListener {
 object Sarah extends Logging {
+
+  System.setOut(new PrintStream("/Users/al/Projects/Scala/Sarah2/std.out"))
+  System.setErr(new PrintStream("/Users/al/Projects/Scala/Sarah2/std.err"))
 
   System.err.println("SARAH is starting ...")
 
@@ -125,10 +119,7 @@ object Sarah extends Logging {
  * This is the main Sarah class. Along with its companion object, everything starts here.
  * TODO - this class has grown out of control, and needs to be refactored.
  */
-class Sarah {
-
-  // TODO get logging going to the sarah.log file
-  val log = com.weiglewilczek.slf4s.Logger("Sarah")
+class Sarah extends Logging {
 
   var pluginInstances = ArrayBuffer[SarahPlugin]()
   var akkaPluginInstances = ArrayBuffer[SarahAkkaActorBasedPlugin]()
@@ -137,18 +128,18 @@ class Sarah {
   var usersName = "Al"
   var timeToWaitAfterSpeaking = 1250
   loadSarahPropertiesFile(CANON_SARAH_PROPERTIES_FILENAME)
-  log.info("USERNAME:            " + usersName)
-  log.info("WAIT AFTER SPEAKING: " + timeToWaitAfterSpeaking)
+  logger.info("USERNAME:            " + usersName)
+  logger.info("WAIT AFTER SPEAKING: " + timeToWaitAfterSpeaking)
   
   //
   // ACTORS
   //
-  log.info("creating ActorSystem and actors")
+  logger.info("creating ActorSystem and actors")
   val system = ActorSystem("Sarah")
   val brain = system.actorOf(Props(new Brain(this)), name = "Brain")
   val mouth = system.actorOf(Props(new Mouth(this)), name = "Mouth")
   
-  log.info("sending waitTime message to Brain")
+  logger.info("sending waitTime message to Brain")
   brain ! SetMinimumWaitTimeAfterSpeaking(timeToWaitAfterSpeaking)
   brain ! ConnectToSiblings
   
@@ -156,7 +147,7 @@ class Sarah {
   // MAIN FRAME WORK
   //
   
-  log.info("about to display main frame")
+  logger.info("about to display main frame")
   val mainFrameController = new Sarah2MainFrameController(this)
   val mainFrame = mainFrameController.getMainFrame
   configureMainFrame
@@ -166,7 +157,7 @@ class Sarah {
   // HANDLE SPEECH
   //
   def sendPhraseToBrain(whatWasHeard: String) {
-      log.info("sending message to Brain: " + whatWasHeard)
+      logger.info("sending message to Brain: " + whatWasHeard)
       brain ! MessageFromEars(whatWasHeard)
   }
 
@@ -180,7 +171,7 @@ class Sarah {
   def startRunning {    
       loadPlugins
       mouth ! InitMouthMessage
-      log.info("SARAH:startRunning IS COMPLETE ...")
+      logger.info("SARAH:startRunning IS COMPLETE ...")
       brain ! PleaseSay("Hello, Al.")
   }
 
@@ -238,13 +229,13 @@ class Sarah {
   }
   
   def tryToHandleTextWithPlugins(textTheUserSaid: String): Boolean = {
-    log.info("tryToHandleTextWithPlugins, TEXT = " + textTheUserSaid)
-    log.info("about to loop through plugins ...")
+    logger.info("tryToHandleTextWithPlugins, TEXT = " + textTheUserSaid)
+    logger.info("about to loop through plugins ...")
     // loop through the plugins, and see if any can handle what was said
     for (plugin <- pluginInstances) {
       
       // TODO plugins need to be able to update sarah's state 
-      log.info("plugin: " + plugin.toString)
+      logger.info("plugin: " + plugin.toString)
       
       val handled = plugin.handlePhrase(textTheUserSaid)
       if (handled) return true
@@ -255,30 +246,30 @@ class Sarah {
   
   def loadPlugins {
     // get a list of subdirs in the plugins dir, assume each is a plugin
-    log.info("Getting list of plugin subdirectories, looking in '" + CANON_PLUGINS_DIR + "'")
+    logger.info("Getting list of plugin subdirectories, looking in '" + CANON_PLUGINS_DIR + "'")
     val pluginDirs = getListOfSubDirectories(CANON_PLUGINS_DIR)
-    log.info("pluginDirs.length = " + pluginDirs.length)
+    logger.info("pluginDirs.length = " + pluginDirs.length)
     
     // trying to keep things simple here. if anything goes wrong in the functions we call,
     // they will throw an exception, and we'll log the error and skip that exception.
     try {
-      log.info("About to loop over pluginDirs ...")
+      logger.info("About to loop over pluginDirs ...")
       for (pluginDir <- pluginDirs) {
         val canonPluginDir = CANON_PLUGINS_DIR + FILE_PATH_SEPARATOR + pluginDir
-        log.info("")
-        log.info("LOADING PLUGIN: " + canonPluginDir)
+        logger.info("")
+        logger.info("LOADING PLUGIN: " + canonPluginDir)
         val pluginInfoFilename = getPluginInfoFilename(canonPluginDir)
-        log.info("pluginInfoFilename = " + pluginInfoFilename)
+        logger.info("pluginInfoFilename = " + pluginInfoFilename)
         val pluginProperties = getPluginProperties(canonPluginDir + FILE_PATH_SEPARATOR + pluginInfoFilename)
-        log.info("read pluginProperties")
+        logger.info("read pluginProperties")
         val pluginJarFilename = getPluginJarFilename(canonPluginDir)
-        log.info("pluginJarFilename = " + pluginJarFilename)
+        logger.info("pluginJarFilename = " + pluginJarFilename)
         val mainClassName = pluginProperties.get("main_class").get
-        log.info("mainClassName = " + mainClassName)
+        logger.info("mainClassName = " + mainClassName)
         val canonJarFilename = canonPluginDir + FILE_PATH_SEPARATOR + pluginJarFilename
-        log.info("canonJarFilename = " + canonJarFilename)
+        logger.info("canonJarFilename = " + canonJarFilename)
 
-        log.info("creating pluginInstance ...")
+        logger.info("creating pluginInstance ...")
 
         // TODO find a better way to tell the difference, such as reflection or
         // the properties file
@@ -295,49 +286,49 @@ class Sarah {
       
     } catch {
       case e: Exception => // ignore, and move on to next plugin
-           log.error("Had a problem loading a plugin:")
-           log.error(e.getMessage)
+           logger.error("Had a problem loading a plugin:")
+           logger.error(e.getMessage)
       case e: RuntimeException =>
-           log.error("Got a RuntimeException loading a plugin." + e.getMessage)
+           logger.error("Got a RuntimeException loading a plugin." + e.getMessage)
       case e: Error =>
-           log.error("Got an Error loading a plugin." + e.getMessage)
+           logger.error("Got an Error loading a plugin." + e.getMessage)
     }
   }
   
   def createOldPluginInstance(canonJarFilename:String, canonPluginDir:String, mainClassName:String) {
     val pluginInstance = getPluginInstance(canonJarFilename, mainClassName)
-    log.info("created pluginInstance, setting canonPluginDir")
+    logger.info("created pluginInstance, setting canonPluginDir")
     pluginInstance.setPluginDirectory(canonPluginDir)
     pluginInstances += pluginInstance
   }
   
   def createAndStartAkkaPlugin(canonJarFilename:String, canonPluginDir:String, mainClassName:String) {
     try {
-      log.info("In getAkkaPluginInstance, creating classLoader ...")
-      log.info("  canonicalJarFilename = " + canonJarFilename)
-      log.info("  mainClassName = " + mainClassName)
-      log.info("  creating classloader ...")
+      logger.info("In getAkkaPluginInstance, creating classLoader ...")
+      logger.info("  canonicalJarFilename = " + canonJarFilename)
+      logger.info("  mainClassName = " + mainClassName)
+      logger.info("  creating classloader ...")
       var classLoader = new java.net.URLClassLoader(Array(new File(canonJarFilename).toURI.toURL), this.getClass.getClassLoader)
-      log.info("  creating plugin ActorRef ...")
+      logger.info("  creating plugin ActorRef ...")
       val pluginRef = system.actorOf(Props(classLoader.loadClass(mainClassName).newInstance.asInstanceOf[SarahAkkaActorBasedPlugin]), name = mainClassName)
 
       // give the brain and pluginRef references to each other
       pluginRef ! SetPluginDir(canonPluginDir)
       pluginRef ! StartPluginMessage(brain)
-      log.info("  setting plugin dir to: " + canonPluginDir)
+      logger.info("  setting plugin dir to: " + canonPluginDir)
       brain ! HeresANewPlugin(pluginRef)
       
       // TODO add this back in, make it a message
 //      akkaPluginInstances += akkaPluginInstance
 
       //      var pluginInstance:SarahAkkaActorBasedPlugin = classLoader.loadClass(mainClassName).newInstance.asInstanceOf[SarahAkkaActorBasedPlugin]
-      log.info("returning new plugin instance ...")
+      logger.info("returning new plugin instance ...")
     } catch {
-      case cce: ClassCastException => log.error(cce.getMessage())
+      case cce: ClassCastException => logger.error(cce.getMessage())
                                       throw cce
-      case ame: AbstractMethodError => log.error(ame.getMessage())
+      case ame: AbstractMethodError => logger.error(ame.getMessage())
                                       throw new Exception("GOT AN AbstractMethodError")
-      case e:   Exception =>          log.error(e.getMessage())
+      case e:   Exception =>          logger.error(e.getMessage())
                                       throw e
     }
 
@@ -345,18 +336,18 @@ class Sarah {
 
   // TODO/NOTE Actor no longer has a `start` method
   def startOlderPlugins {
-      log.info("starting old plugins ...")
+      logger.info("starting old plugins ...")
       for (plugin <- pluginInstances) {
-          log.info("Trying to start plugin instance: " + plugin.toString())
+          logger.info("Trying to start plugin instance: " + plugin.toString())
           connectInstanceToBrain(plugin)
           //startPlugin(plugin)
       }
   }
   
 //  def startAkkaPlugins {
-//    log.info("starting akka actor plugins ...")
+//    logger.info("starting akka actor plugins ...")
 //    for (plugin <- akkaPluginInstances) {
-//      log.info("Trying to start plugin instance: " + plugin.toString())
+//      logger.info("Trying to start plugin instance: " + plugin.toString())
 //      brain ! StartThisPlugin(plugin)
 //    }
 //  }
@@ -367,23 +358,23 @@ class Sarah {
    */
   def getPluginInstance(canonicalJarFilename: String, mainClassName: String): SarahPlugin = {
     try {
-      log.info("creating classLoader ...")
-      log.info("  canonicalJarFilename = " + canonicalJarFilename)
-      log.info("  mainClassName = " + mainClassName)
+      logger.info("creating classLoader ...")
+      logger.info("  canonicalJarFilename = " + canonicalJarFilename)
+      logger.info("  mainClassName = " + mainClassName)
       var classLoader = new java.net.URLClassLoader(Array(new File(canonicalJarFilename).toURI.toURL), this.getClass.getClassLoader)
-      log.info("creating new plugin instance as a SarahPlugin ...")
+      logger.info("creating new plugin instance as a SarahPlugin ...")
 
       // try to create plugin as an instance of SarahActorBasedPlugin. if that fails, try to create it as an
       // instance of just a SarahPlugin
       var pluginInstance:SarahPlugin = classLoader.loadClass(mainClassName).newInstance.asInstanceOf[SarahPlugin]
-      log.info("returning new plugin instance ...")
+      logger.info("returning new plugin instance ...")
       return pluginInstance
     } catch {
-      case cce: ClassCastException => log.error(cce.getMessage())
+      case cce: ClassCastException => logger.error(cce.getMessage())
                                       throw cce
-      case ame: AbstractMethodError => log.error(ame.getMessage())
+      case ame: AbstractMethodError => logger.error(ame.getMessage())
                                       throw new Exception("GOT AN AbstractMethodError")
-      case e:   Exception =>          log.error(e.getMessage())
+      case e:   Exception =>          logger.error(e.getMessage())
                                       throw e
     }
   }
@@ -395,13 +386,13 @@ class Sarah {
 //  }
   
   def connectInstanceToBrain(pluginInstance: SarahPlugin) {
-      log.info("connecting instance to brain")
+      logger.info("connecting instance to brain")
       pluginInstance.connectToBrain(brain)
   }
 
   def startPlugin(pluginInstance: SarahPlugin) {
       pluginInstance.startPlugin
-      log.info("started plugin")
+      logger.info("started plugin")
   }
 
   
@@ -421,7 +412,7 @@ class Sarah {
       }
       return Map("main_class" -> mainClass, "plugin_name" -> pluginName)
     } catch {
-      case e:Exception => log.error(e.getMessage())
+      case e:Exception => logger.error(e.getMessage())
                           throw e
     }
   }
@@ -430,7 +421,12 @@ class Sarah {
    * Get a list representing all the sub-directories in the given directory.
    */
   def getListOfSubDirectories(directoryName: String): Array[String] = {
-    return (new File(directoryName)).listFiles.filter(_.isDirectory).map(_.getName)
+    val dir = new File(directoryName)
+    val listOfFiles = dir.listFiles
+    if (listOfFiles == null) return Array[String]()
+    val filteredList = listOfFiles.filter(_.isDirectory).map(_.getName)
+    filteredList
+//    val foo = (new File(directoryName)).listFiles.filter(_.isDirectory).map(_.getName)
   }
 
   /**
@@ -563,7 +559,7 @@ class Sarah {
 
   // TODO get this code to work properly. System.exit isn't really exiting.
   def shutdown {
-    log.info("Shutting down.")
+    logger.info("Shutting down.")
     brain ! Die
     PluginUtils.sleep(500)
     System.exit(0)

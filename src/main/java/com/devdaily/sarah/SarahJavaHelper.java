@@ -25,6 +25,11 @@ import edu.cmu.sphinx.recognizer.Recognizer;
 import edu.cmu.sphinx.result.Result;
 import edu.cmu.sphinx.util.props.ConfigurationManager;
 
+/**
+ * TODO I'd like to get rid of all the "Sphinx" stuff in this entire project
+ * (and use a different system for mapping text phrases to actions).
+ *
+ */
 public class SarahJavaHelper {
   
   private static final String SLEEP_MODE_TAG = "sleepmode";

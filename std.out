@@ -1,0 +1,18 @@
+(ComputerVoice) ENTERED SPEAK(Hello, Al.) AT 1399688379714
+[ERROR] [05/09/2014 20:19:39.723] [Sarah-akka.actor.default-dispatcher-3] [akka://Sarah/user/Mouth/MouthHelper] null
+java.lang.NullPointerException
+	at com.devdaily.sarah.ComputerVoice.speak(ComputerVoice.java:78)
+	at com.devdaily.sarah.actors.MouthHelper.speak(MouthHelper.scala:46)
+	at com.devdaily.sarah.actors.MouthHelper$$anonfun$receive$1.applyOrElse(MouthHelper.scala:30)
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:465)
+	at com.devdaily.sarah.actors.MouthHelper.aroundReceive(MouthHelper.scala:20)
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:516)
+	at akka.actor.ActorCell.invoke(ActorCell.scala:487)
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:238)
+	at akka.dispatch.Mailbox.run(Mailbox.scala:220)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+
