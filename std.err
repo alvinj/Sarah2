@@ -1,55 +1,365 @@
 SARAH is starting ...
-[run-main] INFO com.devdaily.sarah.Sarah - USERNAME:            Alvin
-[run-main] INFO com.devdaily.sarah.Sarah - WAIT AFTER SPEAKING: 1500
-[run-main] INFO com.devdaily.sarah.Sarah - creating ActorSystem and actors
-[run-main] INFO com.devdaily.sarah.Sarah - sending waitTime message to Brain
-[run-main] INFO com.devdaily.sarah.Sarah - about to display main frame
-[run-main] INFO com.devdaily.sarah.Sarah - Getting list of plugin subdirectories, looking in '/Users/al/Sarah/plugins'
-[run-main] INFO com.devdaily.sarah.Sarah - pluginDirs.length = 0
-[run-main] INFO com.devdaily.sarah.Sarah - About to loop over pluginDirs ...
-[run-main] INFO com.devdaily.sarah.Sarah - starting old plugins ...
-[run-main] INFO com.devdaily.sarah.Sarah - SARAH:startRunning IS COMPLETE ...
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688379710 - got PleaseSay request
+[main] INFO com.devdaily.sarah.Sarah - USERNAME:            Alvin
+[main] INFO com.devdaily.sarah.Sarah - WAIT AFTER SPEAKING: 1500
+[main] INFO com.devdaily.sarah.Sarah - creating ActorSystem and actors
+[main] INFO com.devdaily.sarah.Sarah - sending waitTime message to Brain
+[main] INFO com.devdaily.sarah.Sarah - about to display main frame
+[main] INFO com.devdaily.sarah.Sarah - Getting list of plugin subdirectories, looking in '/Users/al/Sarah/plugins'
+[main] INFO com.devdaily.sarah.Sarah - pluginDirs.length = 0
+[main] INFO com.devdaily.sarah.Sarah - About to loop over pluginDirs ...
+[main] INFO com.devdaily.sarah.Sarah - starting old plugins ...
+[main] INFO com.devdaily.sarah.Sarah - SARAH:startRunning IS COMPLETE ...
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743893662 - got PleaseSay request
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing PleaseSay request to brainSomethingWasHeardHelper (Hello, Al.)
-[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - got a please-say request (Hello, Al.) at (1399688379712)
-[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - sending msg (Hello, Al.) to mouth at (1399688379713)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - got a please-say request (Hello, Al.) at (1399743893665)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - sending msg (Hello, Al.) to mouth at (1399743893666)
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - lastTimeSarahSpoke = 1399743895715
 [AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: C
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386417 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902703 - got MessageFromEars
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: C
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6989
 [AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Co
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (C)
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (C)
 [AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Com
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386418 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902705 - got MessageFromEars
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: Co
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (Co)
 [AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Comp
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386418 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6990
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Co)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Compu
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902705 - got MessageFromEars
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: Com
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (Com)
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386419 - got MessageFromEars
-[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Compu
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6991
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Comput
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Com)
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902706 - got MessageFromEars
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: Comp
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (Comp)
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386419 - got MessageFromEars
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Compute
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6991
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: C
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Comp)
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Computer
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902706 - got MessageFromEars
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: Compu
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
-[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Comput
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (Compu)
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386419 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6991
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Compu)
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902707 - got MessageFromEars
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: Comput
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (Comput)
-[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Compute
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386419 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6992
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Comput)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902710 - got MessageFromEars
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: Compute
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (Compute)
-[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Computer
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399688386420 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6995
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Compute)
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - 1399743902710 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain -     message was: Computer
 [Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
-[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - sarah is speaking, ignoring message from ears (Computer)
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 6995
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Computer)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (c), trying plugins
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = c
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Co
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-4] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (co), trying plugins
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = co
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Com
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-5] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-5] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (com), trying plugins
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = com
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Comp
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-5] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-5] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (comp), trying plugins
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = comp
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Compu
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-5] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-5] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (compu), trying plugins
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = compu
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Comput
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (comput), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = comput
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Compute
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (compute), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = compute
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Computer
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered replyToUserSayingComputer
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered speak, text is: Yo
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - Handled a special voice command, returning.
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - lastTimeSarahSpoke = 1399743904060
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: J
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906767 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: J
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2707
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Ju
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (J)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906768 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: J
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Ju
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Jus
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2708
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Ju)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906768 - got MessageFromEars
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Jus
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2708
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Jus)
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just 
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906768 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2709
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just c
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906769 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just 
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just ch
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2709
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just )
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just che
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906769 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just c
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2710
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just chec
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just c)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906770 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just ch
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just check
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2710
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just ch)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906770 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just che
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2710
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just checki
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just che)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906771 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (j), trying plugins
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just chec
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = j
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just checkin
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2711
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just chec)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Ju
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906771 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just check
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[AWT-EventQueue-0] INFO com.devdaily.sarah.Sarah - sending message to Brain: Just checking
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2711
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just check)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906772 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just checki
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2712
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just checki)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906772 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just checkin
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2712
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just checkin)
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - 1399743906773 - got MessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain -     message was: Just checking
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - entered handleMessageFromEars
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - timeSinceSarahLastSpoke = 2713
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - passing MessageFromEars to brainSomethingWasHeardHelper (Just checking)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (ju), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = ju
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Jus
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (jus), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = jus
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just 
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just ), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just 
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just c
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just c), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just c
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just ch
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just ch), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just ch
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just che
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just che), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just che
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just chec
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just chec), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just chec
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just check
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just check), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just check
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just checki
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just checki), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just checki
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just checkin
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap didn't have key (just checkin), trying plugins
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - tryToHandleTextWithPlugins, TEXT = just checkin
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.Sarah - about to loop through plugins ...
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling handleVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleVoiceCommand, text is: Just checking
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllUserConfigurationFilesOrDie
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered loadAllVoiceCommands
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(200)), ignoring it
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleSpecialVoiceCommands
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - phraseToCommandMap contained key, trying to process
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - handleVoiceCommand, found your phrase in the map: just checking
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered handleUserDefinedVoiceCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - Brain::handleUserDefinedVoiceCommand, commandFileKey = JUST_CHECKING
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - running runUserDefinedCommand(voiceCommand)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - (Brain) vc.command:     JUST_CHECKING
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - (Brain) vc.applescript: say "Okay"
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - entered runAppleScriptCommand
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - calling appleScriptEngine.eval(command)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper -   timestamp = 1399743906799
+[Sarah-akka.actor.default-dispatcher-2] INFO com.devdaily.sarah.actors.Brain - lastTimeSarahSpoke = 1399743907792
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - finished appleScriptEngine.eval(command)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper -   timestamp = 1399743907793
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper - LEAVING appleScriptEngine.eval(command)
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.BrainSomethingWasHeardHelper -   timestamp = 1399743908294
+[Sarah-akka.actor.default-dispatcher-3] INFO com.devdaily.sarah.actors.Brain - got an unknown request(SetEarsState(100)), ignoring it
