@@ -10,3 +10,5 @@ lib-hmmm/
 .settings
 /custom/release
 /custom/jar
+std.err
+std.out

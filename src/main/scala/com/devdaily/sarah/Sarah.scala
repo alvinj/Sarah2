@@ -288,10 +288,13 @@ class Sarah extends Logging {
       case e: Exception => // ignore, and move on to next plugin
            logger.error("Had a problem loading a plugin:")
            logger.error(e.getMessage)
+           e.printStackTrace
       case e: RuntimeException =>
            logger.error("Got a RuntimeException loading a plugin." + e.getMessage)
+           e.printStackTrace
       case e: Error =>
            logger.error("Got an Error loading a plugin." + e.getMessage)
+           e.printStackTrace
     }
   }
   
