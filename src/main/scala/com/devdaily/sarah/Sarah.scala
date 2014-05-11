@@ -37,6 +37,7 @@ import org.jnativehook.keyboard.NativeKeyEvent
 import java.awt.Frame
 import Constants._
 import grizzled.slf4j.Logging
+import java.awt.Point
 
 /**
  * I'm going through some extra work in this file for two reasons.
@@ -52,64 +53,10 @@ object Sarah extends Logging {
   System.setOut(new PrintStream("/Users/al/Projects/Scala/Sarah2/std.out"))
   System.setErr(new PrintStream("/Users/al/Projects/Scala/Sarah2/std.err"))
 
-  System.err.println("SARAH is starting ...")
-
-  // (2) GlobalScreen.registerNativeHook 
-//  try {
-//    GlobalScreen.registerNativeHook
-//  } catch {
-//    case e: NativeHookException =>
-//      System.err.println("There was a problem registering the native hook.")
-//      System.err.println(e.getMessage)
-//      System.exit(1)
-//  }
-
-  // (3) implement nativeKeyPressed, nativeKeyReleased, and nativeKeyTyped
-//  def nativeKeyPressed(e: NativeKeyEvent) {
-//    val key = NativeKeyEvent.getKeyText(e.getKeyCode)
-//    val modifiers = e.getModifiers
-//    println("")
-//    println("modifiers:      " + modifiers)     // 2 = Ctrl
-//    println("key:            " + key)
-//    println("key code:       " + e.getKeyCode)  // 83
-//
-//    //if (e.getKeyCode == 83 && e.getModifiers == 2) {   // ctrl-s
-//    if (key == "F1") {
-//      SwingUtilities.invokeLater(new Runnable(){
-//        def run() {
-////          mainFrame.setVisible(true)
-////          mainFrame.requestFocusInWindow
-////          Thread.sleep(500)
-////          //startDictation
-//        }
-//      });
-//    }
-//      
-//    if (key == "F2") {
-//      SwingUtilities.invokeLater(new Runnable(){
-//        def run() {
-////          emailController.showEmailWindow
-//        }
-//      });
-//    }
-//
-//    // TODO get rid of this
-//    if (e.getKeyCode == NativeKeyEvent.VK_ESCAPE) {
-//      GlobalScreen.unregisterNativeHook
-//    }
-//  }
-//
-//  def nativeKeyReleased(e: NativeKeyEvent) {}
-//  def nativeKeyTyped(e: NativeKeyEvent) {}
-//
-//  // (4) do this
-//  GlobalScreen.getInstance.addNativeKeyListener(this)  
-
-
   /* kick off the app, and hold on */
   def main(args: Array[String]) {
-    val sarah = new Sarah
-    sarah.startRunning
+      val sarah = new Sarah
+      sarah.startRunning
   }
   
 } // end of object
@@ -118,8 +65,9 @@ object Sarah extends Logging {
 /**
  * This is the main Sarah class. Along with its companion object, everything starts here.
  * TODO - this class has grown out of control, and needs to be refactored.
+ * (1) extend NativeKeyListener
  */
-class Sarah extends Logging {
+class Sarah extends Logging with NativeKeyListener {
 
   var pluginInstances = ArrayBuffer[SarahPlugin]()
   var akkaPluginInstances = ArrayBuffer[SarahAkkaActorBasedPlugin]()
@@ -130,6 +78,15 @@ class Sarah extends Logging {
   loadSarahPropertiesFile(CANON_SARAH_PROPERTIES_FILENAME)
   logger.info("USERNAME:            " + usersName)
   logger.info("WAIT AFTER SPEAKING: " + timeToWaitAfterSpeaking)
+
+  // main window status
+  var mainWindowIsShowing = false
+
+  // (2) GlobalScreen.registerNativeHook
+  registerNativeHookOrDieTrying
+
+  // (4) do this
+  GlobalScreen.getInstance.addNativeKeyListener(this)
   
   //
   // ACTORS
@@ -181,11 +138,11 @@ class Sarah extends Logging {
    */
 
   def getAwarenessState:Int = {
-    getStateFromBrain(GetAwarenessState)
+      getStateFromBrain(GetAwarenessState)
   }
 
   def getMouthState:Int = {
-    getStateFromBrain(GetMouthState)
+      getStateFromBrain(GetMouthState)
   }
   
   private def getStateFromBrain(stateRequestMessage: StateRequestMessage):Int = {
@@ -198,8 +155,72 @@ class Sarah extends Logging {
   
   // use this method when setting multiple states at the same time
   def setStates(awareness: Int, mouth: Int) {
-    mainFrameController.updateUIBasedOnStates
+      mainFrameController.updateUIBasedOnStates
   }
+
+
+  /**
+   * Native Hook
+   * -----------
+   */
+
+  // (2a)
+  private def registerNativeHookOrDieTrying {
+      try {
+          GlobalScreen.registerNativeHook
+      } catch {
+          case e: NativeHookException =>
+              System.err.println("There was a problem registering the native hook.")
+              System.err.println(e.getMessage)
+              System.exit(1)
+      }
+  }
+
+  // (3) implement nativeKeyPressed, nativeKeyReleased, and nativeKeyTyped
+  def nativeKeyPressed(e: NativeKeyEvent) {
+      val key = NativeKeyEvent.getKeyText(e.getKeyCode)
+      val modifiers = e.getModifiers
+      println("")
+      println("modifiers:      " + modifiers)     // 2 = Ctrl
+      println("key:            " + key)
+      println("key code:       " + e.getKeyCode)  // 83
+
+    //if (e.getKeyCode == 83 && e.getModifiers == 2) {   // ctrl-s
+      if (key == "F1") {
+          SwingUtilities.invokeLater(new Runnable() {
+              def run() {
+                if (!mainWindowIsShowing) {
+                    mainFrame.setVisible(true)
+                    mainFrame.requestFocusInWindow
+                    mainFrame.getTextField.requestFocusInWindow
+                    mainWindowIsShowing = true
+                    Thread.sleep(500)
+                } else {
+                    mainFrame.setVisible(false)
+                    mainWindowIsShowing = false
+                }
+//              //startDictation
+              }
+          });
+      }
+      
+//    if (key == "F2") {
+//      SwingUtilities.invokeLater(new Runnable(){
+//        def run() {
+//          emailController.showEmailWindow
+//        }
+//      });
+//    }
+
+      // TODO get rid of this
+      if (e.getKeyCode == NativeKeyEvent.VK_ESCAPE) {
+          GlobalScreen.unregisterNativeHook
+      }
+  }
+
+  def nativeKeyReleased(e: NativeKeyEvent) {}
+  def nativeKeyTyped(e: NativeKeyEvent) {}  
+
   
   /**
    * UI and Other Code
@@ -534,38 +555,50 @@ class Sarah extends Logging {
   }
   
   def configureMainFrame {
-    try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
-    } catch {
-      case e: Exception => // ignore
-    }
-    SwingUtilities.invokeLater(new Runnable()
-    {
-      def run()
-      {
-        mainFrame.setResizable(true)
-        mainFrame.setLocationRelativeTo(null)
+      try {
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+      } catch {
+          case e: Exception => // ignore
       }
-    });
+      SwingUtilities.invokeLater(new Runnable()
+      {
+          def run()
+          {
+              mainFrame.setResizable(true)
+              mainFrame.setLocation(getDesiredMainFrameLocation)
+          }
+      });
   }
-
+  
+  private def getDesiredMainFrameLocation = {
+      val mainFrameWidth = mainFrame.getWidth
+      val mainFrameHeight = mainFrame.getHeight
+      val screenSize = Toolkit.getDefaultToolkit.getScreenSize
+      val screenHeight = screenSize.height
+      val screenWidth = screenSize.width
+      val y0 = screenHeight / 3.0
+      val x0 = (screenWidth - mainFrameWidth) / 2.0
+      new Point(x0.toInt, y0.toInt)
+  }
+  
   def displayMainFrame {
-    SwingUtilities.invokeLater(new Runnable()
-    {
-      def run()
+      SwingUtilities.invokeLater(new Runnable()
       {
-        mainFrame.setVisible(true)
-        mainFrame.transferFocus
-      }
-    });
+          def run()
+          {
+              mainFrame.setVisible(true)
+              mainFrame.transferFocus
+              mainWindowIsShowing = true
+          }
+      });
   }
 
   // TODO get this code to work properly. System.exit isn't really exiting.
   def shutdown {
-    logger.info("Shutting down.")
-    brain ! Die
-    PluginUtils.sleep(500)
-    System.exit(0)
+      logger.info("Shutting down.")
+      brain ! Die
+      PluginUtils.sleep(500)
+      System.exit(0)
   }
   
 }
