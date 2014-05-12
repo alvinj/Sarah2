@@ -24,7 +24,7 @@ extends BaseMainFrameController {
     var lastChange = System.currentTimeMillis
 
     /**
-     * this is needed to re-display the window after (a) it is hidden with Cmd-H and
+     * this is (was?) needed to re-display the window. after (a) it is hidden with Cmd-H and
      * then (b) re-displayed with Cmd-Tab. without this, the jframe is not visible.
      */
     mainFrame.addComponentListener(new ComponentAdapter() {

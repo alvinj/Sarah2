@@ -64,8 +64,6 @@ extends Actor
 with Logging
 {
   
-//  val log = Logger("Brain")
-
   // actors we collaborate with
   var mouth: ActorRef = _
   val brainSomethingWasHeardHelper = context.actorOf(Props(new BrainSomethingWasHeardHelper(sarah)), name = "BrainSomethingWasHeardHelper")
@@ -108,6 +106,12 @@ with Logging
          
     case HeresANewPlugin(pluginRef) =>
          handleNewPluginRef(pluginRef)
+         
+    case ShowTextWindow(textToShow) =>
+         showTextWindow(textToShow)
+
+    case HideTextWindow =>
+         hideTextWindow
 
     // state
     case MouthIsSpeaking =>
@@ -139,29 +143,30 @@ with Logging
          logger.info(format("got an unknown request(%s), ignoring it", unknown.toString))
   }
   
-  def handleNewPluginRef(pluginRef: ActorRef) {
-    akkaPluginReferences += pluginRef
+  def showTextWindow(textToShow: String) {
+      sarah.showTextWindow(textToShow)
   }
   
-//  def startAkkaPlugin(pluginInstance: SarahAkkaActorBasedPlugin) {
-//    // create the plugin, then give it a reference to the brain
-//    val pluginRef = context.actorOf(Props(pluginInstance), name = pluginInstance.getClass.getName)
-//    pluginRef ! StartPluginMessage(self)
-//    akkaPluginReferences += pluginRef
-//  }
-//  
+  def hideTextWindow {
+      sarah.hideTextWindow
+  }
+  
+  def handleNewPluginRef(pluginRef: ActorRef) {
+      akkaPluginReferences += pluginRef
+  }
+  
   def handleConnectToSiblingsMessage {
-    mouth = context.actorFor("../Mouth")
+      mouth = context.actorFor("../Mouth")
   }
 
   def handleMouthIsSpeakingMessage {
-    mouthIsSpeaking = true
+      mouthIsSpeaking = true
   }
   
   def handleMouthIsFinishedSpeakingMessage {
-    markThisAsTheLastTimeSarahSpoke
-    mouthIsSpeaking = false
-    tellUISpeakingHasEnded
+      markThisAsTheLastTimeSarahSpoke
+      mouthIsSpeaking = false
+      tellUISpeakingHasEnded
   }
   
 

@@ -40,6 +40,12 @@ sh _addHiResKeyToPlistFile.sh
 
 open custom/release/Sarah.app
 
+echo ""
+echo "If this fails with this error: 'LSOpenURLsWithRole() failed with error -10810'"
+echo "you need to configure your Accessibility options in System Preferences >"
+echo "Security & Privacy > Privacy Tab > Accessibility"
+echo ""
+
 
 
 

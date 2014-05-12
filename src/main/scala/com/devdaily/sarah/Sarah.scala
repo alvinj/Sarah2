@@ -38,6 +38,11 @@ import java.awt.Frame
 import Constants._
 import grizzled.slf4j.Logging
 import java.awt.Point
+import com.devdaily.sarah.gui.TextWindowBuilder
+import com.devdaily.sarah.gui.SwingUtils
+import java.awt.event.ActionListener
+import java.awt.event.ActionEvent
+import javax.swing.Timer
 
 /**
  * I'm going through some extra work in this file for two reasons.
@@ -101,7 +106,7 @@ class Sarah extends Logging with NativeKeyListener {
   brain ! ConnectToSiblings
   
   //
-  // MAIN FRAME WORK
+  // MAIN FRAME
   //
   
   logger.info("about to display main frame")
@@ -110,7 +115,13 @@ class Sarah extends Logging with NativeKeyListener {
   configureMainFrame
   displayMainFrame
   
-  // ----- END constructor -----
+  // TEXT/INFO WINDOW
+  val textWindow = new TextWindowBuilder(
+          "",
+          new Dimension(mainFrame.getWidth, 400), 
+          new Point(372, 395))
+  
+  // ----- end constructor -----
 
   //
   // HANDLE SPEECH
@@ -180,7 +191,6 @@ class Sarah extends Logging with NativeKeyListener {
   def nativeKeyPressed(e: NativeKeyEvent) {
       val key = NativeKeyEvent.getKeyText(e.getKeyCode)
       val modifiers = e.getModifiers
-//      println("")
 //      println("modifiers:      " + modifiers)     // 2 = Ctrl
 //      println("key:            " + key)
 //      println("key code:       " + e.getKeyCode)  // 83
@@ -204,14 +214,6 @@ class Sarah extends Logging with NativeKeyListener {
           });
       }
       
-//    if (key == "F2") {
-//      SwingUtilities.invokeLater(new Runnable(){
-//        def run() {
-//          emailController.showEmailWindow
-//        }
-//      });
-//    }
-
       // TODO get rid of this
       if (e.getKeyCode == NativeKeyEvent.VK_ESCAPE) {
           GlobalScreen.unregisterNativeHook
@@ -227,12 +229,42 @@ class Sarah extends Logging with NativeKeyListener {
    * ---------------------------------------------
    */
 
+  // TODO figure out what *really* needs to be done to get focus back to the input window.
+  // this works, but as you can see, it's a kludge.
+  // (right now building Sarah is a pain b/c of the Accessibility stuff, and I need a break from this)
+  def requestFocusInWindowAndTextField {
+      // (1) 1st attempt
+      val block = {
+          mainFrame.setVisible(true)
+          mainFrame.toFront
+          mainFrame.requestFocus
+          mainFrame.requestFocusInWindow
+          mainFrame.getTextField.requestFocus
+          mainFrame.getTextField.requestFocusInWindow
+      }
+      SwingUtils.invokeLater(block)
+      
+      // (1) 2nd attempt
+      // TODO this is a kludge
+      val listener = new ActionListener {
+          def actionPerformed(e: ActionEvent){
+              SwingUtils.invokeLater(block)
+          }
+      }
+      val waitTime = 2000
+      var timer = new Timer(waitTime, listener)
+      timer.setRepeats(false)
+      timer.setCoalesce(true)
+      timer.start
+  }
+
   def updateUI {
-    mainFrameController.updateUIBasedOnStates
+      mainFrameController.updateUIBasedOnStates
   }
 
   def updateUISpeakingHasEnded {
-    mainFrameController.updateUISpeakingHasEnded
+      mainFrameController.updateUISpeakingHasEnded
+      requestFocusInWindowAndTextField
   }
   
   private def loadSarahPropertiesFile(canonConfigFilename: String) {
@@ -261,7 +293,18 @@ class Sarah extends Logging with NativeKeyListener {
       }
       return false
   }
+
+  def showTextWindow(textToShow: String) {
+      // show the text window
+      textWindow.setText(textToShow)
+      textWindow.setVisible(true)
+      requestFocusInWindowAndTextField
+  }
   
+  def hideTextWindow {
+      textWindow.setVisible(false)
+      requestFocusInWindowAndTextField
+  }
   
   private def loadPlugins {
     // get a list of subdirs in the plugins dir, assume each is a plugin

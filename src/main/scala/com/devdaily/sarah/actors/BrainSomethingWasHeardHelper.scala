@@ -182,17 +182,24 @@ with Logging
         return true
     }
 
-    if (textTheUserSaid.trim.equals("thanks") || textTheUserSaid.trim.equals("thank you")) { 
+    else if (textTheUserSaid.trim.equals("thanks") || textTheUserSaid.trim.equals("thank you")) { 
         replyToUserSayingThankYou
         return true
     }
 
-    if (textTheUserSaid.trim.equals("computer")) { 
+    else if (textTheUserSaid.trim.equals("computer")) { 
         replyToUserSayingComputer
         return true
     }
 
-    else if (textTheUserSaid.equals("soy lent green is people") ) {
+    // "close the window", "hide the window", "close window"
+    else if (textTheUserSaid.trim.toLowerCase.matches("(close|hide) .*window")) { 
+        brain ! HideTextWindow
+        brain ! MouthIsFinishedSpeaking  //TODO i don't like handling this as a special case
+        return true
+    }
+
+    else if (textTheUserSaid.trim.toLowerCase.matches("(bye|goodbye|adios|later) *(sarah)*")) { 
         speak("Live long, and prosper.")
         PluginUtils.sleep(500)
         sarah.shutdown

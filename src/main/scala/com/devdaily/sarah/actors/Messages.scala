@@ -17,7 +17,12 @@ case object GetEarsState extends StateRequestMessage
 case object GetMouthState extends StateRequestMessage
 case class GetInSleepMode
 
-// brain helper
+// displays emails, stocks prices, and other text
+case class ShowTextWindow(textToShow: String)
+case class HideTextWindow
+
+
+// brain helper classes
 
 case class SomethingWasHeard(whatWeHeard: String,
                              inSleepMode: Boolean,
