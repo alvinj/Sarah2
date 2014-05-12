@@ -43,6 +43,9 @@ object Brain {
 }
 
 /**
+ * TODO The Brain doesn't need to worry about the Ears hearing the Mouth
+ * speaking any more.
+ * 
  * The Brain has the responsibility of deciphering whatever input it
  * is given, then taking action on that input, as desired.
  * 

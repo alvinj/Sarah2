@@ -5,20 +5,22 @@ import _root_.com.apple.eawt.ApplicationEvent
 
 class MacApplicationAdapter(handler: Sarah) extends ApplicationAdapter
 {
+
   override def handleQuit(e: ApplicationEvent) {
-    handler.handleMacQuitAction
+      handler.handleMacQuitAction
   }
 
   override def handlePreferences(e: ApplicationEvent) {
-    handler.handleMacPreferencesAction
+      handler.handleMacPreferencesAction
   }
 
   override def handleAbout(e: ApplicationEvent) {
-    // tell the system we're handling this, so it won't display
-    // the default system "about" dialog after ours is shown.
-    e.setHandled(true)
-    handler.handleMacAboutAction
+      // tell the system we're handling this, so it won't display
+      // the default system "about" dialog after ours is shown.
+      e.setHandled(true)
+      handler.handleMacAboutAction
   }
+
 }
 
 

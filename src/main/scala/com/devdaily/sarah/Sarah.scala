@@ -110,6 +110,8 @@ class Sarah extends Logging with NativeKeyListener {
   configureMainFrame
   displayMainFrame
   
+  // ----- END constructor -----
+
   //
   // HANDLE SPEECH
   //
@@ -117,8 +119,6 @@ class Sarah extends Logging with NativeKeyListener {
       logger.info("sending message to Brain: " + whatWasHeard)
       brain ! MessageFromEars(whatWasHeard)
   }
-
-  // END constructor
 
   // TODO probably a better way to do these
   def getDataFileDirectory = CANON_DATA_DIR
@@ -180,10 +180,10 @@ class Sarah extends Logging with NativeKeyListener {
   def nativeKeyPressed(e: NativeKeyEvent) {
       val key = NativeKeyEvent.getKeyText(e.getKeyCode)
       val modifiers = e.getModifiers
-      println("")
-      println("modifiers:      " + modifiers)     // 2 = Ctrl
-      println("key:            " + key)
-      println("key code:       " + e.getKeyCode)  // 83
+//      println("")
+//      println("modifiers:      " + modifiers)     // 2 = Ctrl
+//      println("key:            " + key)
+//      println("key code:       " + e.getKeyCode)  // 83
 
     //if (e.getKeyCode == 83 && e.getModifiers == 2) {   // ctrl-s
       if (key == "F1") {
@@ -235,14 +235,14 @@ class Sarah extends Logging with NativeKeyListener {
     mainFrameController.updateUISpeakingHasEnded
   }
   
-  def loadSarahPropertiesFile(canonConfigFilename: String) {
-    val properties = new Properties
-    val in = new FileInputStream(canonConfigFilename)
-    properties.load(in)
-    in.close
-    usersName = properties.getProperty(PROPS_USERNAME_KEY)
-    val tmp = properties.getProperty(PROPS_TIME_TO_SLEEP_AFTER_SPEAKING)
-    timeToWaitAfterSpeaking = tmp.toInt
+  private def loadSarahPropertiesFile(canonConfigFilename: String) {
+      val properties = new Properties
+      val in = new FileInputStream(canonConfigFilename)
+      properties.load(in)
+      in.close
+      usersName = properties.getProperty(PROPS_USERNAME_KEY)
+      val tmp = properties.getProperty(PROPS_TIME_TO_SLEEP_AFTER_SPEAKING)
+      timeToWaitAfterSpeaking = tmp.toInt
   }
 
   def displayAvailableVoiceCommands(voiceCommands: scala.collection.immutable.List[String]) {
@@ -250,22 +250,20 @@ class Sarah extends Logging with NativeKeyListener {
   }
   
   def tryToHandleTextWithPlugins(textTheUserSaid: String): Boolean = {
-    logger.info("tryToHandleTextWithPlugins, TEXT = " + textTheUserSaid)
-    logger.info("about to loop through plugins ...")
-    // loop through the plugins, and see if any can handle what was said
-    for (plugin <- pluginInstances) {
-      
-      // TODO plugins need to be able to update sarah's state 
-      logger.info("plugin: " + plugin.toString)
-      
-      val handled = plugin.handlePhrase(textTheUserSaid)
-      if (handled) return true
-    }
-    return false
+      logger.info("tryToHandleTextWithPlugins, TEXT = " + textTheUserSaid)
+      logger.info("about to loop through plugins ...")
+      // loop through the plugins, and see if any can handle what was said
+      for (plugin <- pluginInstances) {
+          // TODO plugins need to be able to update sarah's state 
+          logger.info("plugin: " + plugin.toString)
+          val handled = plugin.handlePhrase(textTheUserSaid)
+          if (handled) return true
+      }
+      return false
   }
   
   
-  def loadPlugins {
+  private def loadPlugins {
     // get a list of subdirs in the plugins dir, assume each is a plugin
     logger.info("Getting list of plugin subdirectories, looking in '" + CANON_PLUGINS_DIR + "'")
     val pluginDirs = getListOfSubDirectories(CANON_PLUGINS_DIR)
@@ -319,14 +317,14 @@ class Sarah extends Logging with NativeKeyListener {
     }
   }
   
-  def createOldPluginInstance(canonJarFilename:String, canonPluginDir:String, mainClassName:String) {
+  private def createOldPluginInstance(canonJarFilename:String, canonPluginDir:String, mainClassName:String) {
     val pluginInstance = getPluginInstance(canonJarFilename, mainClassName)
     logger.info("created pluginInstance, setting canonPluginDir")
     pluginInstance.setPluginDirectory(canonPluginDir)
     pluginInstances += pluginInstance
   }
   
-  def createAndStartAkkaPlugin(canonJarFilename:String, canonPluginDir:String, mainClassName:String) {
+  private def createAndStartAkkaPlugin(canonJarFilename:String, canonPluginDir:String, mainClassName:String) {
     try {
       logger.info("In getAkkaPluginInstance, creating classLoader ...")
       logger.info("  canonicalJarFilename = " + canonJarFilename)
@@ -359,7 +357,7 @@ class Sarah extends Logging with NativeKeyListener {
   }
 
   // TODO/NOTE Actor no longer has a `start` method
-  def startOlderPlugins {
+  private def startOlderPlugins {
       logger.info("starting old plugins ...")
       for (plugin <- pluginInstances) {
           logger.info("Trying to start plugin instance: " + plugin.toString())
@@ -380,7 +378,7 @@ class Sarah extends Logging with NativeKeyListener {
   /**
    * Returns the plugin as a ready-to-run instance, or throws an exception.
    */
-  def getPluginInstance(canonicalJarFilename: String, mainClassName: String): SarahPlugin = {
+  private def getPluginInstance(canonicalJarFilename: String, mainClassName: String): SarahPlugin = {
     try {
       logger.info("creating classLoader ...")
       logger.info("  canonicalJarFilename = " + canonicalJarFilename)
@@ -409,12 +407,13 @@ class Sarah extends Logging with NativeKeyListener {
 //  def getAkkaPluginInstance(canonicalJarFilename: String, mainClassName: String): SarahAkkaActorBasedPlugin = {
 //  }
   
-  def connectInstanceToBrain(pluginInstance: SarahPlugin) {
+  private def connectInstanceToBrain(pluginInstance: SarahPlugin) {
       logger.info("connecting instance to brain")
       pluginInstance.connectToBrain(brain)
   }
 
-  def startPlugin(pluginInstance: SarahPlugin) {
+  private def startPlugin(pluginInstance: SarahPlugin) {
+      // TODO this isn't really used any more since upgrading Akka
       pluginInstance.startPlugin
       logger.info("started plugin")
   }
@@ -423,7 +422,7 @@ class Sarah extends Logging with NativeKeyListener {
   /**
    * Get the plugin properties (plugin_name, main_class), or throw an exception.
    */
-  def getPluginProperties(infoFilename: String): Map[String, String] = {
+  private def getPluginProperties(infoFilename: String): Map[String, String] = {
     try {
       val properties = new Properties
       val in = new FileInputStream(infoFilename)
@@ -444,13 +443,12 @@ class Sarah extends Logging with NativeKeyListener {
   /**
    * Get a list representing all the sub-directories in the given directory.
    */
-  def getListOfSubDirectories(directoryName: String): Array[String] = {
-    val dir = new File(directoryName)
-    val listOfFiles = dir.listFiles
-    if (listOfFiles == null) return Array[String]()
-    val filteredList = listOfFiles.filter(_.isDirectory).map(_.getName)
-    filteredList
-//    val foo = (new File(directoryName)).listFiles.filter(_.isDirectory).map(_.getName)
+  private def getListOfSubDirectories(directoryName: String): Array[String] = {
+      val dir = new File(directoryName)
+      val listOfFiles = dir.listFiles
+      if (listOfFiles == null) return Array[String]()
+      val filteredList = listOfFiles.filter(_.isDirectory).map(_.getName)
+      filteredList
   }
 
   /**
@@ -459,18 +457,18 @@ class Sarah extends Logging with NativeKeyListener {
    * Throws an Exception if a file is not found.
    * TODO refactor this function to work with the similar '.jar' function.
    */
-  def getPluginInfoFilename(directoryName: String):String = {
-    val folder = new File(directoryName)
-    val files = folder.listFiles(new FilenameFilter {
-      def accept(file: File, filename: String): Boolean = {
-        return (filename.endsWith(".info"))
+  private def getPluginInfoFilename(directoryName: String):String = {
+      val folder = new File(directoryName)
+      val files = folder.listFiles(new FilenameFilter {
+          def accept(file: File, filename: String): Boolean = {
+              return (filename.endsWith(".info"))
+          }
+      })
+      if (files == null || files.length > 0) {
+          return files(0).getName
+      } else {
+          throw new Exception("No .info file found in directory '" + directoryName + "'")
       }
-    })
-    if (files == null || files.length > 0) {
-      return files(0).getName
-    } else {
-      throw new Exception("No .info file found in directory '" + directoryName + "'")
-    }
   }
 
   /**
@@ -479,56 +477,56 @@ class Sarah extends Logging with NativeKeyListener {
    * Throws an Exception if a file is not found.
    * TODO refactor this function to work with the similar '.info' function.
    */
-  def getPluginJarFilename(directoryName: String):String = {
-    val folder = new File(directoryName)
-    val files = folder.listFiles(new FilenameFilter {
-      def accept(file: File, filename: String): Boolean = {
-        return (filename.endsWith(".jar"))
+  private def getPluginJarFilename(directoryName: String):String = {
+      val folder = new File(directoryName)
+      val files = folder.listFiles(new FilenameFilter {
+          def accept(file: File, filename: String): Boolean = {
+              return (filename.endsWith(".jar"))
+          }
+      })
+      if (files == null || files.length > 0) {
+          return files(0).getName
+      } else {
+          throw new Exception("No .jar file found in directory '" + directoryName + "'")
       }
-    })
-    if (files == null || files.length > 0) {
-      return files(0).getName
-    } else {
-      throw new Exception("No .jar file found in directory '" + directoryName + "'")
-    }
   }
   
   
   /**
    * If the app is not running on mac os x, die right away.
    */
-  def dieIfNotRunningOnMacOsX
+  private def dieIfNotRunningOnMacOsX
   {
-    val mrjVersionExists = System.getProperty("mrj.version") != null
-    val osNameExists = System.getProperty("os.name").startsWith("Mac OS")
+      val mrjVersionExists = System.getProperty("mrj.version") != null
+      val osNameExists = System.getProperty("os.name").startsWith("Mac OS")
     
-    if ( !mrjVersionExists || !osNameExists)
-    {
-      System.err.println("SARAH is not running on a Mac OS X system, terminating.")
-      System.exit(EXIT_CODE_NOT_RUNNING_ON_MAC)
-    }
+      if ( !mrjVersionExists || !osNameExists)
+      {
+          System.err.println("SARAH is not running on a Mac OS X system, terminating.")
+          System.exit(EXIT_CODE_NOT_RUNNING_ON_MAC)
+      }
   }
   
-  def configureForMacOSX
+  private def configureForMacOSX
   {
-    // set some mac-specific properties; helps when i don't use ant to build the code
-    System.setProperty("apple.awt.graphics.EnableQ2DX", "true")
-    System.setProperty("apple.laf.useScreenMenuBar", "true")
-    System.setProperty("com.apple.mrj.application.apple.menu.about.name", APP_NAME)
+      // set some mac-specific properties; helps when i don't use ant to build the code
+      System.setProperty("apple.awt.graphics.EnableQ2DX", "true")
+      System.setProperty("apple.laf.useScreenMenuBar", "true")
+      System.setProperty("com.apple.mrj.application.apple.menu.about.name", APP_NAME)
 
-    // create an instance of the Mac Application class, so i can handle the 
-    // mac quit event with the Mac ApplicationAdapter
-    val macApplication = Application.getApplication
-    val macAdapter = new MacApplicationAdapter(this)
-    macApplication.addApplicationListener(macAdapter)
+      // create an instance of the Mac Application class, so i can handle the 
+      // mac quit event with the Mac ApplicationAdapter
+      val macApplication = Application.getApplication
+      val macAdapter = new MacApplicationAdapter(this)
+      macApplication.addApplicationListener(macAdapter)
     
-    // TODO - enable when ready (must enable the preferences option manually)
-    //macApplication.setEnabledPreferencesMenu(true)
+      // TODO - enable when ready (must enable the preferences option manually)
+      //macApplication.setEnabledPreferencesMenu(true)
   }
   
   // TODO implement
   def handleMacQuitAction {
-    shutdown
+      shutdown
   }
 
   // TODO implement
@@ -554,7 +552,7 @@ class Sarah extends Logging with NativeKeyListener {
         "About Hyde", JOptionPane.INFORMATION_MESSAGE);
   }
   
-  def configureMainFrame {
+  private def configureMainFrame {
       try {
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
       } catch {
@@ -581,7 +579,7 @@ class Sarah extends Logging with NativeKeyListener {
       new Point(x0.toInt, y0.toInt)
   }
   
-  def displayMainFrame {
+  private def displayMainFrame {
       SwingUtilities.invokeLater(new Runnable()
       {
           def run()
