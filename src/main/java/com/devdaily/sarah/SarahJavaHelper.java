@@ -16,14 +16,14 @@ import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import edu.cmu.sphinx.frontend.util.Microphone;
-import edu.cmu.sphinx.jsgf.JSGFGrammar;
-import edu.cmu.sphinx.linguist.dictionary.Word;
-import edu.cmu.sphinx.linguist.language.grammar.GrammarArc;
-import edu.cmu.sphinx.linguist.language.grammar.GrammarNode;
-import edu.cmu.sphinx.recognizer.Recognizer;
-import edu.cmu.sphinx.result.Result;
-import edu.cmu.sphinx.util.props.ConfigurationManager;
+//import edu.cmu.sphinx.frontend.util.Microphone;
+//import edu.cmu.sphinx.jsgf.JSGFGrammar;
+//import edu.cmu.sphinx.linguist.dictionary.Word;
+//import edu.cmu.sphinx.linguist.language.grammar.GrammarArc;
+//import edu.cmu.sphinx.linguist.language.grammar.GrammarNode;
+//import edu.cmu.sphinx.recognizer.Recognizer;
+//import edu.cmu.sphinx.result.Result;
+//import edu.cmu.sphinx.util.props.ConfigurationManager;
 
 /**
  * TODO I'd like to get rid of all the "Sphinx" stuff in this entire project
@@ -189,64 +189,64 @@ public class SarahJavaHelper {
   /**
    * Returns a random sentence that fits this grammar
    */
-  public static String getRandomSentence(final JSGFGrammar jsgfGrammar, Random randomizer)
-  {
-    StringBuilder sb = new StringBuilder();
-    GrammarNode node = jsgfGrammar.getInitialNode();
-    while (!node.isFinalNode())
-    {
-      if (!node.isEmpty())
-      {
-        Word word = node.getWord();
-        if (!word.isFiller())
-          sb.append(word.getSpelling()).append(' ');
-      }
-      node = selectRandomSuccessor(node, randomizer);
-    }
-    return sb.toString().trim();
-  }
-
-  private static GrammarNode selectRandomSuccessor(GrammarNode node, Random randomizer)
-  {
-    GrammarArc[] arcs = node.getSuccessors();
-
-    // select a transition arc with respect to the arc-probabilities (which are
-    // log and we don't have a logMath here
-    // which makes the implementation a little bit messy
-    if (arcs.length > 1)
-    {
-      double[] linWeights = new double[arcs.length];
-      double linWeightsSum = 0;
-
-      final double EPS = 1E-10;
-
-      for (int i = 0; i < linWeights.length; i++)
-      {
-        linWeights[i] = (arcs[0].getProbability() + EPS) / (arcs[i].getProbability() + EPS);
-        linWeightsSum += linWeights[i];
-      }
-
-      for (int i = 0; i < linWeights.length; i++)
-      {
-        linWeights[i] /= linWeightsSum;
-      }
-
-      double selIndex = randomizer.nextDouble();
-      int index = 0;
-      for (int i = 0; selIndex > EPS; i++)
-      {
-        index = i;
-        selIndex -= linWeights[i];
-      }
-
-      return arcs[index].getGrammarNode();
-
-    }
-    else
-    {
-      return arcs[0].getGrammarNode();
-    }
-  }  
+//  public static String getRandomSentence(final JSGFGrammar jsgfGrammar, Random randomizer)
+//  {
+//    StringBuilder sb = new StringBuilder();
+//    GrammarNode node = jsgfGrammar.getInitialNode();
+//    while (!node.isFinalNode())
+//    {
+//      if (!node.isEmpty())
+//      {
+//        Word word = node.getWord();
+//        if (!word.isFiller())
+//          sb.append(word.getSpelling()).append(' ');
+//      }
+//      node = selectRandomSuccessor(node, randomizer);
+//    }
+//    return sb.toString().trim();
+//  }
+//
+//  private static GrammarNode selectRandomSuccessor(GrammarNode node, Random randomizer)
+//  {
+//    GrammarArc[] arcs = node.getSuccessors();
+//
+//    // select a transition arc with respect to the arc-probabilities (which are
+//    // log and we don't have a logMath here
+//    // which makes the implementation a little bit messy
+//    if (arcs.length > 1)
+//    {
+//      double[] linWeights = new double[arcs.length];
+//      double linWeightsSum = 0;
+//
+//      final double EPS = 1E-10;
+//
+//      for (int i = 0; i < linWeights.length; i++)
+//      {
+//        linWeights[i] = (arcs[0].getProbability() + EPS) / (arcs[i].getProbability() + EPS);
+//        linWeightsSum += linWeights[i];
+//      }
+//
+//      for (int i = 0; i < linWeights.length; i++)
+//      {
+//        linWeights[i] /= linWeightsSum;
+//      }
+//
+//      double selIndex = randomizer.nextDouble();
+//      int index = 0;
+//      for (int i = 0; selIndex > EPS; i++)
+//      {
+//        index = i;
+//        selIndex -= linWeights[i];
+//      }
+//
+//      return arcs[index].getGrammarNode();
+//
+//    }
+//    else
+//    {
+//      return arcs[0].getGrammarNode();
+//    }
+//  }  
   
 
   
@@ -255,24 +255,24 @@ public class SarahJavaHelper {
    * how to get all the possible sentences any other way (easily), so I copied
    * and modified this code.
    */
-  public static void getAllPossibleSentences(int count, 
-      List<String> allPossibleSentences, 
-      final JSGFGrammar jsgfGrammar,
-      Random randomizer)
-  {
-    Set<String> set = new HashSet<String>();
-    for (int i = 0; i < count; i++)
-    {
-      String s = getRandomSentence(jsgfGrammar, randomizer);
-      if (!set.contains(s))
-      {
-        set.add(s);
-      }
-    }
-    
-    allPossibleSentences = new ArrayList<String>(set);
-    Collections.sort(allPossibleSentences);
-  }
+//  public static void getAllPossibleSentences(int count, 
+//      List<String> allPossibleSentences, 
+//      final JSGFGrammar jsgfGrammar,
+//      Random randomizer)
+//  {
+//    Set<String> set = new HashSet<String>();
+//    for (int i = 0; i < count; i++)
+//    {
+//      String s = getRandomSentence(jsgfGrammar, randomizer);
+//      if (!set.contains(s))
+//      {
+//        set.add(s);
+//      }
+//    }
+//    
+//    allPossibleSentences = new ArrayList<String>(set);
+//    Collections.sort(allPossibleSentences);
+//  }
 
   
   public static void dumpAllPossibleSentences(List<String> allPossibleSentences) {
