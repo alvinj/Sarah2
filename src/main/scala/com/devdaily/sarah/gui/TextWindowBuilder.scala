@@ -36,6 +36,7 @@ class TextWindowBuilder (
     val textArea = new JTextArea(textAreaRows, textAreaColumns)
     textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 20))
     textArea.setEditable(false)
+    textArea.setMargin(new Insets(12, 12, 12, 12))
     val scrollPane = new JScrollPane(textArea)
     textArea.setText(textToDisplay)
     scrollPane.setPreferredSize(windowSize)

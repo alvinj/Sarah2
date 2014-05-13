@@ -199,9 +199,10 @@ with Logging
         return true
     }
 
-    else if (textTheUserSaid.trim.toLowerCase.matches("(bye|goodbye|adios|later) *(sarah)*")) { 
+    else if (textTheUserSaid.trim.toLowerCase.matches("(bye|goodbye|adios|later) *(sarah)*")
+             || textTheUserSaid.trim.toLowerCase.matches("laters* (baby|sarah)")) { 
         speak("Live long, and prosper.")
-        PluginUtils.sleep(500)
+        PluginUtils.sleep(2000)
         sarah.shutdown
         return true
     }
