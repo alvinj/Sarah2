@@ -18,6 +18,9 @@ import akka.actor._
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import grizzled.slf4j.Logging
+import java.awt.event.ActionListener
+import java.awt.event.ActionEvent
+import com.devdaily.sarah.gui.SwingUtils
 
 object Brain {
 
@@ -110,6 +113,9 @@ with Logging
     case ShowTextWindow(textToShow) =>
          showTextWindow(textToShow)
 
+    case ShowTextWindowBriefly(textToShow, duration) =>
+         showTextWindow(textToShow, duration)
+
     case HideTextWindow =>
          hideTextWindow
 
@@ -145,6 +151,20 @@ with Logging
   
   def showTextWindow(textToShow: String) {
       sarah.showTextWindow(textToShow)
+  }
+
+  // TODO wrote this in a rush, used javax.swing.Timer; probably better ways
+  def showTextWindow(textToShow: String, duration: Int) {
+      sarah.showTextWindow(textToShow)
+      val listener = new ActionListener {
+          def actionPerformed(e: ActionEvent){
+              hideTextWindow
+          }
+      }
+      var timer = new javax.swing.Timer(duration, listener)
+      timer.setRepeats(false)
+      timer.setCoalesce(true)
+      timer.start
   }
   
   def hideTextWindow {

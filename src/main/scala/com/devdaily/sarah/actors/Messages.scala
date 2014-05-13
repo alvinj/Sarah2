@@ -19,6 +19,7 @@ case class GetInSleepMode
 
 // displays emails, stocks prices, and other text
 case class ShowTextWindow(textToShow: String)
+case class ShowTextWindowBriefly(textToShow: String, durationToShow: Int)
 case class HideTextWindow
 
 

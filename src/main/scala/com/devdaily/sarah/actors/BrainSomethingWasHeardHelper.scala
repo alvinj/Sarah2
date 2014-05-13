@@ -140,9 +140,30 @@ with Logging
         val handled = sarah.tryToHandleTextWithPlugins(textTheUserSaid)
         if (handled) {
             brain ! SetBrainStates(getAwarenessState, Brain.EARS_STATE_LISTENING, Brain.MOUTH_STATE_NOT_SPEAKING)
+        } else {
+            // TODO a bit of a kludge to update the ui; i don't really use these states in Sarah2
+            brain ! PleaseSay(getRandomImSorryPhrase)
+            brain ! SetBrainStates(getAwarenessState, Brain.EARS_STATE_LISTENING, Brain.MOUTH_STATE_NOT_SPEAKING)
         }
-      // this function doesn't care if it was handled (refactor)
     }
+  }
+
+  private def getRandomImSorryPhrase = {
+      val r = new scala.util.Random
+      val phrases = Array(
+          "Sorry, I don't know how to do that.",
+          "Sorry, I don't understand you.",
+          "Sorry, you're on your own.",
+          "Bugger, I don't know how to do that.",
+          "I ... can't ... do ... that.",
+          "I got nothin'.",
+          "Good luck with that.",
+          "No comprendo.",
+          "Who is asking?",
+          "Huh?",
+          "What?",
+          "You got me.")
+      phrases(r.nextInt(phrases.size))
   }
   
   // TODO there's probably a better way to do this
